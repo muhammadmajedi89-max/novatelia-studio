@@ -1,8 +1,9 @@
 import Link from 'next/link';
+import type { Route } from 'next';
 import { Footer } from '@/components/layout/footer';
 import { Header } from '@/components/layout/header';
 
-const recoveryLinks = [
+const recoveryLinks: Array<{ title: string; href: Route }> = [
   { title: 'Home', href: '/' },
   { title: 'Services', href: '/services' },
   { title: 'Portfolio', href: '/portfolio' },
