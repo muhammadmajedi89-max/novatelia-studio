@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Card } from '@/components/ui/card';
+import type { SanityPost } from '@/types/sanity';
 
 const articles = [
   {
@@ -34,7 +35,19 @@ const articles = [
   }
 ];
 
-export function ArticleGrid() {
+type ArticleGridProps = {
+  cmsPosts?: SanityPost[];
+};
+
+export function ArticleGrid({ cmsPosts = [] }: ArticleGridProps) {
+  const displayArticles = cmsPosts.length
+    ? cmsPosts.map((post) => ({
+        title: post.title,
+        category: post.category || 'Insights',
+        href: `/blog/${post.slug}`
+      }))
+    : articles;
+
   return (
     <section className="container mx-auto px-6 py-24">
       <div className="mb-12 max-w-3xl">
@@ -44,7 +57,7 @@ export function ArticleGrid() {
         </h2>
       </div>
       <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-        {articles.map((article) => (
+        {displayArticles.map((article) => (
           <Link key={article.href} href={article.href} className="group block transition hover:-translate-y-1">
             <Card className="h-full">
               <p className="text-sm font-semibold text-brand-blue">{article.category}</p>
