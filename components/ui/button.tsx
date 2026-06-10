@@ -1,9 +1,9 @@
 import Link from 'next/link';
-import { type ReactNode } from 'react';
+import { type ButtonHTMLAttributes, type ReactNode } from 'react';
 
 type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'dark';
 
-type ButtonProps = {
+type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   href?: string;
   children: ReactNode;
   variant?: ButtonVariant;
@@ -17,7 +17,7 @@ const variants: Record<ButtonVariant, string> = {
   dark: 'bg-brand-navy text-white hover:bg-brand-dark'
 };
 
-export function Button({ href, children, variant = 'primary', className = '' }: ButtonProps) {
+export function Button({ href, children, variant = 'primary', className = '', ...buttonProps }: ButtonProps) {
   const classes = `focus-ring inline-flex items-center justify-center rounded-full px-7 py-4 text-sm font-semibold transition ${variants[variant]} ${className}`;
 
   if (href) {
@@ -28,5 +28,5 @@ export function Button({ href, children, variant = 'primary', className = '' }: 
     );
   }
 
-  return <button className={classes}>{children}</button>;
+  return <button className={classes} {...buttonProps}>{children}</button>;
 }
