@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Card } from '@/components/ui/card';
+import type { SanityCareer } from '@/types/sanity';
 
 const roles = [
   {
@@ -28,7 +29,20 @@ const roles = [
   }
 ];
 
-export function OpenRoles() {
+type OpenRolesProps = {
+  cmsRoles?: SanityCareer[];
+};
+
+export function OpenRoles({ cmsRoles = [] }: OpenRolesProps) {
+  const displayRoles = cmsRoles.length
+    ? cmsRoles.map((role) => ({
+        title: role.title,
+        team: role.department || 'Studio',
+        location: role.location || 'Remote / Regional',
+        href: `/careers/${role.slug}`
+      }))
+    : roles;
+
   return (
     <section id="open-roles" className="container mx-auto px-6 py-24">
       <div className="mb-12 max-w-3xl">
@@ -38,8 +52,8 @@ export function OpenRoles() {
         </h2>
       </div>
       <div className="grid gap-5 md:grid-cols-2">
-        {roles.map((role) => (
-          <Link key={role.title} href={role.href} className="group block transition hover:-translate-y-1">
+        {displayRoles.map((role) => (
+          <Link key={role.href} href={role.href} className="group block transition hover:-translate-y-1">
             <Card className="h-full">
               <div className="flex flex-wrap items-start justify-between gap-4">
                 <div>
