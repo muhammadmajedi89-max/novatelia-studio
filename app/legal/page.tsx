@@ -1,8 +1,9 @@
 import Link from 'next/link';
+import type { Route } from 'next';
 import { Footer } from '@/components/layout/footer';
 import { Header } from '@/components/layout/header';
 
-const legalPages = [
+const legalPages: Array<{ title: string; body: string; href: Route }> = [
   {
     title: 'Privacy Policy',
     body: 'How Novatelia Studio handles personal information, inquiries and website data.',
