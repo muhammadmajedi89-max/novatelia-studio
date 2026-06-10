@@ -1,8 +1,9 @@
 import Link from 'next/link';
+import type { Route } from 'next';
 import { Footer } from '@/components/layout/footer';
 import { Header } from '@/components/layout/header';
 
-const results = [
+const results: Array<{ title: string; body: string; href: Route }> = [
   { title: 'Services', body: 'Web design, AI systems, automation and digital growth services.', href: '/services' },
   { title: 'Portfolio', body: 'Selected studio projects and enterprise digital systems.', href: '/portfolio' },
   { title: 'AI Showcase', body: 'Practical AI assistants, agents and workflow automation ideas.', href: '/ai-showcase' },
