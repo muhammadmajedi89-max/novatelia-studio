@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Card } from '@/components/ui/card';
+import type { SanityPortfolioProject } from '@/types/sanity';
 
 const projects = [
   {
@@ -40,7 +41,20 @@ const projects = [
   }
 ];
 
-export function PortfolioGrid() {
+type PortfolioGridProps = {
+  cmsProjects?: SanityPortfolioProject[];
+};
+
+export function PortfolioGrid({ cmsProjects = [] }: PortfolioGridProps) {
+  const displayProjects = cmsProjects.length
+    ? cmsProjects.map((project) => ({
+        title: project.title,
+        category: project.serviceType || project.industry || 'Case Study',
+        metric: project.metrics?.[0]?.value || project.summary || 'Outcome-focused digital delivery',
+        href: `/portfolio/${project.slug}`
+      }))
+    : projects;
+
   return (
     <section className="container mx-auto px-6 py-24">
       <div className="mb-12 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
@@ -55,7 +69,7 @@ export function PortfolioGrid() {
         </p>
       </div>
       <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-        {projects.map((project) => (
+        {displayProjects.map((project) => (
           <Link key={project.href} href={project.href} className="group block transition hover:-translate-y-1">
             <Card className="h-full overflow-hidden p-0">
               <div className="h-48 bg-gradient-to-br from-brand-blue/20 via-brand-purple/15 to-brand-teal/20" />
