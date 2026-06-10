@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Card } from '@/components/ui/card';
+import type { SanityService } from '@/types/sanity';
 
 const services = [
   {
@@ -44,7 +45,19 @@ const services = [
   }
 ];
 
-export function ServicesGrid() {
+type ServicesGridProps = {
+  cmsServices?: SanityService[];
+};
+
+export function ServicesGrid({ cmsServices = [] }: ServicesGridProps) {
+  const displayServices = cmsServices.length
+    ? cmsServices.map((service) => ({
+        title: service.title,
+        href: `/services/${service.slug}`,
+        description: service.summary || service.features?.[0] || 'Novatelia Studio service powered by CMS.'
+      }))
+    : services;
+
   return (
     <section className="container mx-auto px-6 py-24">
       <div className="mb-12 max-w-3xl">
@@ -57,7 +70,7 @@ export function ServicesGrid() {
         </p>
       </div>
       <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-        {services.map((service) => (
+        {displayServices.map((service) => (
           <Link key={service.href} href={service.href} className="group block transition hover:-translate-y-1">
             <Card className="h-full">
               <div className="mb-6 h-12 w-12 rounded-2xl bg-gradient-to-br from-brand-blue/15 to-brand-purple/15" />
