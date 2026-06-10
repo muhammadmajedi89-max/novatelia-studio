@@ -1,8 +1,9 @@
 import Link from 'next/link';
+import type { Route } from 'next';
 import { Card } from '@/components/ui/card';
 import type { SanityPost } from '@/types/sanity';
 
-const articles = [
+const articles: Array<{ title: string; category: string; href: Route }> = [
   {
     title: 'How practical AI systems improve daily operations',
     category: 'AI',
@@ -40,11 +41,11 @@ type ArticleGridProps = {
 };
 
 export function ArticleGrid({ cmsPosts = [] }: ArticleGridProps) {
-  const displayArticles = cmsPosts.length
+  const displayArticles: Array<{ title: string; category: string; href: Route }> = cmsPosts.length
     ? cmsPosts.map((post) => ({
         title: post.title,
         category: post.category || 'Insights',
-        href: `/blog/${post.slug}`
+        href: `/blog/${post.slug}` as Route
       }))
     : articles;
 
