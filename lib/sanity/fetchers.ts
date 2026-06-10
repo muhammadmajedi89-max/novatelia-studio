@@ -1,4 +1,4 @@
-import { sanityClient, isSanityConfigured } from './client';
+import { sanityClient } from './client';
 import {
   careerBySlugQuery,
   careersQuery,
@@ -17,7 +17,7 @@ import type {
 const defaultRevalidate = 60;
 
 async function fetchFromSanity<T>(query: string, params: Record<string, string> = {}): Promise<T | null> {
-  if (!isSanityConfigured()) {
+  if (!sanityClient) {
     return null;
   }
 
